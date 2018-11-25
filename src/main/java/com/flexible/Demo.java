@@ -1,7 +1,10 @@
 package com.flexible;
 
+import org.springframework.aop.Advisor;
 import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.aop.framework.AopProxy;
+import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.cglib.proxy.MethodInterceptor;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +22,8 @@ public class Demo {
 
 //        MethodBeforeAdvice
 //        AopProxy
-
+//        ProxyFactoryBean
+//        MethodInterceptor
+//        Advisor
     }
 }

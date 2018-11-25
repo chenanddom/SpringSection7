@@ -8,15 +8,49 @@
          http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 
-
-    <bean id="greetingAdvice" class="com.flexible.beforeadvice.GreetBeforeAdvice"></bean>
     <bean id="target" class="com.flexible.beforeadvice.PoliteWaiter"></bean>
+    <bean id="greetingAdvice" class="com.flexible.beforeadvice.GreetBeforeAdvice"></bean>
 
     <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
     p:proxyInterfaces="com.flexible.beforeadvice.Waiter"
-    p:interceptorNames="greetingAdvice"
+    p:interceptorNames="greetingAdvice,"
+    p:optimize="true"
     p:target-ref="target">
     </bean>
 
+
+    <bean id="target2" class="com.flexible.afteradvice.PoliteWaiter"></bean>
+    <bean id="greetingAdvice2" class="com.flexible.afteradvice.GreetBeforeAdvice"></bean>
+    <bean id="greetingAfterAdvice" class="com.flexible.afteradvice.GreetAfterAdvice"></bean>
+
+    <bean id="waiter2" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyInterfaces="com.flexible.afteradvice.Waiter"
+          p:interceptorNames="greetingAdvice2,greetingAfterAdvice"
+          p:optimize="true"
+          p:target-ref="target2">
+    </bean>
+
+
+
+    <bean id="target3" class="com.flexible.aroundadvice.PoliteWaiter"></bean>
+    <bean id="greetingAdvice3" class="com.flexible.aroundadvice.GreetingInterceptor"></bean>
+
+    <bean id="waiter3" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyInterfaces="com.flexible.aroundadvice.Waiter"
+          p:interceptorNames="greetingAdvice3"
+          p:target-ref="target3">
+    </bean>
+
+
+
+    <!--异常增强-->
+    <bean id="transactionManager" class="com.flexible.throwadvice.TransactionManager"></bean>
+    <bean id="payTarget" class="com.flexible.throwadvice.PayService"></bean>
+
+    <bean id="ins" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="transactionManager"
+          p:target-ref="payTarget"
+          p:proxyTargetClass="true">
+    </bean>
 
 </beans>
