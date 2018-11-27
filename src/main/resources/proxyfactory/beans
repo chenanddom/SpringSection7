@@ -12,10 +12,10 @@
     <bean id="greetingAdvice" class="com.flexible.beforeadvice.GreetBeforeAdvice"></bean>
 
     <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
-    p:proxyInterfaces="com.flexible.beforeadvice.Waiter"
-    p:interceptorNames="greetingAdvice,"
-    p:optimize="true"
-    p:target-ref="target">
+          p:proxyInterfaces="com.flexible.beforeadvice.Waiter"
+          p:interceptorNames="greetingAdvice,"
+          p:optimize="true"
+          p:target-ref="target">
     </bean>
 
 
@@ -31,7 +31,6 @@
     </bean>
 
 
-
     <bean id="target3" class="com.flexible.aroundadvice.PoliteWaiter"></bean>
     <bean id="greetingAdvice3" class="com.flexible.aroundadvice.GreetingInterceptor"></bean>
 
@@ -40,7 +39,6 @@
           p:interceptorNames="greetingAdvice3"
           p:target-ref="target3">
     </bean>
-
 
 
     <!--异常增强-->
@@ -52,5 +50,67 @@
           p:target-ref="payTarget"
           p:proxyTargetClass="true">
     </bean>
+
+
+    <!--普通静态方法切面匹配-->
+
+    <bean id="waiterTarget" class="com.flexible.advisormatch.staticmethodadvisormatch.Waiter"></bean>
+    <bean id="sellerTarget" class="com.flexible.advisormatch.staticmethodadvisormatch.Seller"></bean>
+
+    <bean id="advisormatchGreetingAdvice"
+          class="com.flexible.advisormatch.staticmethodadvisormatch.GreetBeforeAdvice"></bean>
+
+    <bean id="greetAdvisor" class="com.flexible.advisormatch.staticmethodadvisormatch.GreetingAdvisor"
+          p:advice-ref="advisormatchGreetingAdvice"></bean>  <!--这里注入一个前置切面-->
+    <!--通过一个父类定义一个公共的配置信息-->
+    <bean id="parent" abstract="true" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="greetAdvisor"
+          p:proxyTargetClass="true"
+    ></bean>
+    <bean id="advisormatchWaiter" parent="parent" p:target-ref="waiterTarget"></bean>
+    <bean id="advisormatchSeller" parent="parent" p:target-ref="sellerTarget"></bean>
+
+
+    <!--正则表达式匹配切面-->
+
+    <bean id="waiterTarget2" class="com.flexible.advisormatch.regexpadvisormatch.Waiter"></bean>
+    <bean id="sellerTarget2" class="com.flexible.advisormatch.regexpadvisormatch.Seller"></bean>
+
+    <bean id="advisormatchGreetingAdvice2"
+          class="com.flexible.advisormatch.regexpadvisormatch.GreetBeforeAdvice"></bean>
+
+    <bean id="greetAdvisor2" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"
+          p:advice-ref="advisormatchGreetingAdvice2">
+        <property name="patterns">
+            <list>
+                <value>.*greet.*</value>
+            </list>
+        </property>
+    </bean>
+    <!--通过一个父类定义一个公共的配置信息-->
+    <bean id="parent2" abstract="true" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="greetAdvisor2"
+          p:proxyTargetClass="true"
+    ></bean>
+    <bean id="advisormatchWaiter2" parent="parent2" p:target-ref="waiterTarget2"></bean>
+    <bean id="advisormatchSeller2" parent="parent2" p:target-ref="sellerTarget2"></bean>
+
+
+    <!--动态切面配置-->
+
+
+    <bean id="waiterTarget3" class="com.flexible.advisormatch.dynamicmatch.Waiter"></bean>
+    <bean id="dynamicAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="pointcut">
+            <bean class="com.flexible.advisormatch.dynamicmatch.GreetingDynamicPointcut"></bean>
+        </property>
+        <property name="advice">
+            <bean class="com.flexible.advisormatch.dynamicmatch.GreetBeforeAdvice"></bean>
+        </property>
+    </bean>
+    <bean id="waiter4" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="dynamicAdvisor"
+          p:target-ref="waiterTarget3"
+          p:proxyTargetClass="true"></bean>
 
 </beans>

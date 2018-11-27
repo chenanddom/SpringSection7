@@ -2,8 +2,12 @@ package com.flexible;
 
 import org.springframework.aop.Advisor;
 import org.springframework.aop.MethodBeforeAdvice;
+import org.springframework.aop.Pointcut;
+import org.springframework.aop.PointcutAdvisor;
 import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.support.*;
+import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 import org.springframework.cglib.proxy.MethodInterceptor;
 
 /**
@@ -25,5 +29,18 @@ public class Demo {
 //        ProxyFactoryBean
 //        MethodInterceptor
 //        Advisor
+//        Pointcut
+//        StaticMethodMatcherPointcut
+//        NameMatchMethodPointcut
+//        AbstractRegexpMethodPointcut
+//        DynamicMethodMatcherPointcut
+//        AnnotationMatchingPointcut
+//        ExpressionPointcut
+//        ControlFlowPointcut
+//        ComposablePointcut
+//        PointcutAdvisor
+//        DynamicMethodMatcherPointcut
+
+
     }
 }
