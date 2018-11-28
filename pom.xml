@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <file.encoding>UTF-8</file.encoding>
-        <spring.version>4.3.19.RELEASE</spring.version>
+        <spring.version>4.2.2.RELEASE</spring.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <mysql.version>5.1.47</mysql.version>
         <servlet.version>4.0.1</servlet.version>

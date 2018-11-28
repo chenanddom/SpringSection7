@@ -113,4 +113,41 @@
           p:target-ref="waiterTarget3"
           p:proxyTargetClass="true"></bean>
 
+    <!--流程切面-->
+    <bean id="controlFlowGreetingAdvice" class="com.flexible.advisormatch.controflowmatch.GreetBeforeAdvice"></bean>
+
+    <bean id="controlFlowWaiterTarget" class="com.flexible.advisormatch.controflowmatch.Waiter"></bean>
+
+    <bean id="controlFlowPointcut" class="org.springframework.aop.support.ControlFlowPointcut">
+        <constructor-arg type="java.lang.Class"
+                         value="com.flexible.advisormatch.controflowmatch.WaiterDelegate"></constructor-arg>
+        <constructor-arg type="java.lang.String" value="service"></constructor-arg>
+    </bean>
+
+    <bean id="controlFlowAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor"
+          p:pointcut-ref="controlFlowPointcut"
+          p:advice-ref="controlFlowGreetingAdvice">
+    </bean>
+
+    <bean id="controlFlowWaiter1" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="controlFlowAdvisor"
+          p:target-ref="controlFlowWaiterTarget"
+          p:proxyTargetClass="true">
+    </bean>
+
+
+    <!--复合切点-->
+    <bean id="composableGreetingAdvice" class="com.flexible.advisormatch.composablepointcutmatch.GreetBeforeAdvice"></bean>
+    <bean id="gcp" class="com.flexible.advisormatch.composablepointcutmatch.GreetingComposablePointcut"></bean>
+    <bean id="composableAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor"
+    p:pointcut="#{gcp.intersectionPointcut}"
+    p:advice-ref="composableGreetingAdvice"
+    ></bean>
+    <bean id="composableWaiterTarget" class="com.flexible.advisormatch.composablepointcutmatch.Waiter"></bean>
+    <bean id="composableProxyWaiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+    p:interceptorNames="composableAdvisor"
+    p:target-ref="composableWaiterTarget"
+    p:proxyTargetClass="true"></bean>
+
+
 </beans>
