@@ -1,6 +1,5 @@
 package com.flexible.introduceadvice;
 
-import com.flexible.proxy.MethodPerformace;
 
 public class PerformanceMonitor {
 	private static ThreadLocal<MethodPerformace> performaceRecord = new ThreadLocal<MethodPerformace>();

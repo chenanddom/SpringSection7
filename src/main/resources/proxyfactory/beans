@@ -52,6 +52,14 @@
     </bean>
 
 
+    <bean id="pmonitor" class="com.flexible.introduceadvice.ControllablePerformanaceMonitor"></bean>
+    <bean id="forumServiceTarget" class="com.flexible.introduceadvice.ForumService"></bean>
+    <bean id="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
+    p:interfaces="com.flexible.introduceadvice.Monitorable"
+    p:target-ref="forumServiceTarget"
+    p:interceptorNames="pmonitor"
+    p:proxyTargetClass="true"></bean>
+
     <!--普通静态方法切面匹配-->
 
     <bean id="waiterTarget" class="com.flexible.advisormatch.staticmethodadvisormatch.Waiter"></bean>
