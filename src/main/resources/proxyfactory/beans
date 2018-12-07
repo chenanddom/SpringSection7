@@ -51,7 +51,7 @@
           p:proxyTargetClass="true">
     </bean>
 
-
+    <!--引介增强-->
     <bean id="pmonitor" class="com.flexible.introduceadvice.ControllablePerformanaceMonitor"></bean>
     <bean id="forumServiceTarget" class="com.flexible.introduceadvice.ForumService"></bean>
     <bean id="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
@@ -158,4 +158,29 @@
     p:proxyTargetClass="true"></bean>
 
 
+    <!--BeanNameAutoProxyCreator自动创建代理类-->
+    <bean id="autoWaiter" class="com.flexible.autoprxycreator.beannameautoproxycreator.Waiter"></bean>
+    <bean id="autoSeller" class="com.flexible.autoprxycreator.beannameautoproxycreator.Seller"></bean>
+    <bean id="autoGreetAdvice" class="com.flexible.autoprxycreator.beannameautoproxycreator.GreetingBeforeAdvice"></bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"
+    p:beanNames="autoWaiter,autoSeller"
+    p:interceptorNames="autoGreetAdvice"
+    p:optimize="true"></bean>
+
+
+    <!--DefaultAdvisorAutoProxyCreator-->
+    <bean id="autoWaiter2" class="com.flexible.autoprxycreator.beannameautoproxycreator.Waiter"></bean>
+    <bean id="autoSeller2" class="com.flexible.autoprxycreator.beannameautoproxycreator.Seller"></bean>
+    <bean id="autoGreetAdvice2" class="com.flexible.autoprxycreator.beannameautoproxycreator.GreetingBeforeAdvice"></bean>
+    <bean id="autogreetAdvisor2" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"
+          p:advice-ref="autoGreetAdvice2">
+        <property name="patterns">
+            <list>
+                <value>.*greet.*</value>
+            </list>
+        </property>
+    </bean>
+    <!--会开启扫描所有的切面-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
 </beans>

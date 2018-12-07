@@ -6,8 +6,10 @@ import org.springframework.aop.Pointcut;
 import org.springframework.aop.PointcutAdvisor;
 import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.aop.support.*;
 import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.cglib.proxy.MethodInterceptor;
 
 /**
@@ -40,7 +42,7 @@ public class Demo {
 //        ComposablePointcut
 //        PointcutAdvisor
 //        DynamicMethodMatcherPointcut
-
-
+//        BeanPostProcessor
+//        DefaultAdvisorAutoProxyCreator
     }
 }
